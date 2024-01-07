@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,6 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::get('posts', [PostController::class, 'index'])
         ->name('posts.index');
+
+
+Route::post('/register', [RegisteredUserController::class, 'store']);
