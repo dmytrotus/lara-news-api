@@ -3,14 +3,14 @@ version: '3.9'
 services:
 
     # frontend
-    frontend-service:
-        build:
-            context: ./frontend
-        container_name: frontend
-        ports:
-            - "3000:3000"
-        volumes:
-            - ./frontend:/var/www/frontend
+    # frontend-service:
+    #     build:
+    #         context: ./frontend
+    #     container_name: frontend
+    #     ports:
+    #         - "3000:3000"
+    #     volumes:
+    #         - ./frontend:/var/www/frontend
 
     # backend
     backend-service:
@@ -33,7 +33,7 @@ services:
             - ./backend:/var/www/backend
             - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
         depends_on:
-            - frontend-service
+            #- frontend-service
             - backend-service
             - mysql
 
@@ -45,6 +45,7 @@ services:
             - "3346:3306"
         volumes:
             - ./docker/mysql:/var/lib/mysql
+            - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
         command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
         #restart: always
         environment:
