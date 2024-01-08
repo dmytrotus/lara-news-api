@@ -1,31 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Blog from './pages/Blog';
+import Page404 from './pages/Page404';
+import { Routes, Route } from "react-router-dom";
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
-      <div>
-      <a className="button mx-2">
-            Login
-      </a>
-      <a className="button mx-2">
-            Register
-      </a>
-      <a className="button mx-2">
-            Blog
-      </a>
-      </div>
-    </>
+    <Routes>
+          <Route index element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="blog" element={<Blog />} />
+          <Route path="*" element={<Page404 />} />
+    </Routes>
   )
 }
 
