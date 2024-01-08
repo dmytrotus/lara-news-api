@@ -22,6 +22,3 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::get('posts', [PostController::class, 'index'])
         ->name('posts.index');
-
-
-Route::post('/register', [RegisteredUserController::class, 'store']);
