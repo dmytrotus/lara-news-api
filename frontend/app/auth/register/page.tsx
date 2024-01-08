@@ -14,15 +14,29 @@ export default function Page() {
       body: formData,
     });
 
-    console.log(response)
-
   };
+
+  const sendReq = async () => {
+    const token = '2|3tYeljWbYKclAhfDgpVpbdCaMNLI2ZkChkjQ15Pa6989129a';
+    const res = await fetch(`http://localhost:7717/api/register`, {
+      method: 'POST',
+      headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
+    })
+    console.log(res.json())
+  }
 
   return (
     <div className="container px-8 mx-auto xl:px-5  max-w-screen-lg py-5 lg:py-8">
       <h1 className="mt-2 mb-3 text-3xl font-semibold tracking-tight text-center lg:leading-snug text-brand-primary lg:text-4xl dark:text-white">
         Register
       </h1>
+      <button onClick={sendReq}>SEND</button>
       <form className="my-10" onSubmit={handleSubmit}>
         <div className="grid my-10 md:grid-cols-2 gap-4">
         <div className="mb-5">
