@@ -22,7 +22,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::post('posts', [PostController::class, 'index'])
+    Route::get('posts', [PostController::class, 'index'])
             ->name('posts.index');
 });
 
