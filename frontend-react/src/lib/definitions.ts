@@ -4,3 +4,10 @@ export type Article = {
     description: string;
     url: string;
 };
+
+export type UserData = {
+    name: string,
+    email: string,
+    password: string,
+    password_confirmation: string
+};

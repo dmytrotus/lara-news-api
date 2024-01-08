@@ -1,17 +1,13 @@
 import { Link } from "react-router-dom";
+import { register } from "../useApi";
 
 function Register() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const formData = new FormData(event.currentTarget)
-    console.log(formData)
-    const response = await fetch('http://localhost:7717/api/register', {
-      method: 'POST',
-      body: formData,
-    });
-
+    const data = Object.fromEntries(formData.entries());
+    register(data)
   };
 
   return (
@@ -37,12 +33,20 @@ function Register() {
                   name="email"
               />
           </div>
-          <div className="col-span-2 mb-5">
+          <div className="mb-5">
               <input
                   placeholder="Password"
                   className="w-full px-4 py-3 border-2 placeholder:text-gray-800 dark:text-white rounded-md outline-none dark:placeholder:text-gray-200 dark:bg-gray-900 focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
                   type="password"
                   name="password"
+              />
+          </div>
+          <div className="mb-5">
+              <input
+                  placeholder="Confirm password"
+                  className="w-full px-4 py-3 border-2 placeholder:text-gray-800 dark:text-white rounded-md outline-none dark:placeholder:text-gray-200 dark:bg-gray-900 focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
+                  type="password"
+                  name="password_confirmation"
               />
           </div>
           <Link 
