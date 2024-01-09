@@ -10,7 +10,7 @@ docker compose up
 
 Then in browser please open 
 ```js
-http://localhost:5174/
+http://localhost:4173/
 ```
 
 ## What else need to do inside the project
