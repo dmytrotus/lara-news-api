@@ -1,13 +1,21 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 import { register } from "../useApi";
 
 function Register() {
+
+  const [token, setToken] = useState(null);
+
+  if (token) {
+    return <Navigate to="/blog" />;
+  }
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget)
     const data = Object.fromEntries(formData.entries());
-    register(data)
+    const res = await register(data);
+    setToken(res.data.token)
   };
 
   return (

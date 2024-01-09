@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from "react-router-dom";
 
 function Home() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>

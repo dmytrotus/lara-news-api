@@ -3,6 +3,7 @@ export type Article = {
     title: string;
     description: string;
     url: string;
+    url_to_image: string;
 };
 
 export type UserData = {
