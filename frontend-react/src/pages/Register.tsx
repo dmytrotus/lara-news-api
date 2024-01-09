@@ -1,23 +1,33 @@
-import { useState } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { register } from "../useApi";
+import { UserData } from "../lib/definitions";
 
 function Register() {
 
   const [token, setToken] = useState(null);
+  const [userData, setUserData] = useState<UserData>({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: ''
+  })
 
   if (token) {
     return <Navigate to="/blog" />;
   }
 
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-    const res = await register({
-      name: event.currentTarget.name,
-      email: event.currentTarget.email,
-      password: event.currentTarget.password,
-      password_confirmation: event.currentTarget.password_confirmation
-      });
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.persist();
+    setUserData(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const res = await register(userData);
     setToken(res.data.token)
   };
 
@@ -26,7 +36,7 @@ function Register() {
       <h1 className="mt-2 mb-3 text-3xl font-semibold tracking-tight text-center lg:leading-snug text-brand-primary lg:text-4xl dark:text-white">
         Register
       </h1>
-      <form className="my-10" onSubmit={handleSubmit}>
+      <form className="my-10" method="POST" onSubmit={handleSubmit}>
         <div className="grid my-10 md:grid-cols-2 gap-4">
         <div className="mb-5">
               <input
@@ -34,6 +44,8 @@ function Register() {
                   className="w-full px-4 py-3 border-2 placeholder:text-gray-800 dark:text-white rounded-md outline-none dark:placeholder:text-gray-200 dark:bg-gray-900 focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
                   type="text"
                   name="name"
+                  value={userData.name}
+                  onChange={handleChange}
               />
           </div>
         <div className="mb-5">
@@ -42,6 +54,8 @@ function Register() {
                   className="w-full px-4 py-3 border-2 placeholder:text-gray-800 dark:text-white rounded-md outline-none dark:placeholder:text-gray-200 dark:bg-gray-900 focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
                   type="email"
                   name="email"
+                  value={userData.email}
+                  onChange={handleChange}
               />
           </div>
           <div className="mb-5">
@@ -50,6 +64,8 @@ function Register() {
                   className="w-full px-4 py-3 border-2 placeholder:text-gray-800 dark:text-white rounded-md outline-none dark:placeholder:text-gray-200 dark:bg-gray-900 focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
                   type="password"
                   name="password"
+                  value={userData.password}
+                  onChange={handleChange}
               />
           </div>
           <div className="mb-5">
@@ -58,6 +74,8 @@ function Register() {
                   className="w-full px-4 py-3 border-2 placeholder:text-gray-800 dark:text-white rounded-md outline-none dark:placeholder:text-gray-200 dark:bg-gray-900 focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
                   type="password"
                   name="password_confirmation"
+                  value={userData.password_confirmation}
+                  onChange={handleChange}
               />
           </div>
           <Link 
