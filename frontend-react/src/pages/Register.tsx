@@ -10,11 +10,14 @@ function Register() {
     return <Navigate to="/blog" />;
   }
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget)
-    const data = Object.fromEntries(formData.entries());
-    const res = await register(data);
+    const res = await register({
+      name: event.currentTarget.name,
+      email: event.currentTarget.email,
+      password: event.currentTarget.password,
+      password_confirmation: event.currentTarget.password_confirmation
+      });
     setToken(res.data.token)
   };
 
