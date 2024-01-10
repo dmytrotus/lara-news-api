@@ -2,7 +2,7 @@ import axios from "axios";
 import { setBearerToken, getBearerToken } from "./lib/globals";
 import type { UserLoginData, UserRegisterData } from "./lib/definitions";
 
-const backendHost = 'http://localhost:7717/';
+const backendHost = import.meta.env.VITE_BACKEND_HOST;
 
 export const getPosts = async () => {
     const token = getBearerToken();
