@@ -1,6 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { Link, Navigate } from "react-router-dom";
-import { getBearerToken } from "../lib/globals";
 import { UserLoginData } from "../lib/definitions";
 import { login } from "../useApi";
 
@@ -26,7 +25,7 @@ function Login() {
     setToken(res.data.token)
   };
 
-  if (getBearerToken()) {
+  if (token) {
     return <Navigate to="/blog" />;
   }
 
