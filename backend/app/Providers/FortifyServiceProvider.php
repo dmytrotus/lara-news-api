@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use App\Models\User;
 use Laravel\Fortify\Contracts\RegisterResponse;
+use Laravel\Fortify\Contracts\LoginResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,20 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->instance(LoginResponse::class, new class implements LoginResponse {
+            public function toResponse($request)
+            {
+                $user = User::where('email', $request->email)->first();
+                $user->tokens()->delete();
+                return $request->wantsJson()
+                ? response()->json([
+                    'message' => 'User is logged in',
+                    'token' => $user->createToken('api')->plainTextToken,
+                ], 201)
+                : redirect()->intended(Fortify::redirects('login'));
+            }
+        });
+
         $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
             public function toResponse($request)
             {

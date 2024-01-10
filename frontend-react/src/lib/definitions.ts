@@ -7,7 +7,12 @@ export type Article = {
     source: string;
 };
 
-export type UserData = {
+export type UserLoginData = {
+    email: string,
+    password: string
+};
+
+export type UserRegisterData = {
     name: string,
     email: string,
     password: string,

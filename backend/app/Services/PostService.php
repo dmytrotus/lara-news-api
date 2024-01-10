@@ -10,6 +10,6 @@ class PostService
 {
     public function getPosts(): LengthAwarePaginator
     {
-        return Post::paginate(20);
+        return Post::orderBy('id', 'DESC')->paginate(50);
     }
 }

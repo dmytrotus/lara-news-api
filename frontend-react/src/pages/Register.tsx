@@ -1,12 +1,12 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { register } from "../useApi";
-import { UserData } from "../lib/definitions";
+import { UserRegisterData } from "../lib/definitions";
 
 function Register() {
 
   const [token, setToken] = useState(null);
-  const [userData, setUserData] = useState<UserData>({
+  const [userData, setUserData] = useState<UserRegisterData>({
     name: '',
     email: '',
     password: '',
