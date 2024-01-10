@@ -5,7 +5,7 @@ There are 2 separate folders. Inside backend we have Laravel app, inside fronten
 ## How to start the project 
 
 ```js
-docker compose up
+docker compose up -d --build
 ```
 
 Then in browser please open 
