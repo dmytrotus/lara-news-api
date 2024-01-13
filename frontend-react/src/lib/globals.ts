@@ -1,6 +1,8 @@
 export const setBearerToken = (token: string) => {
     // Set the cookie with the name 'accessToken'
-    document.cookie = `accessToken=${token}; expires=Thu, path=/; Secure`;
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 90);
+    document.cookie = `accessToken=${token}; expires=${expirationDate.toUTCString()}; path=/; Secure`;
 }
 
 export const getBearerToken = () => {
