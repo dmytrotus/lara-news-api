@@ -23,6 +23,7 @@ class JwtController extends Controller
         return response()->json([
             'message' => 'token refreshed',
             'token' => $token,
+            'token_expires' => $tokenExpires = time() + config('jwt.ttl') * 60,
         ]);
     }
 }

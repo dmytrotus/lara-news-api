@@ -15,7 +15,7 @@ function Blog() {
   }, [])
 
   const logout = () => {
-    setBearerToken('');
+    setBearerToken('', '');
     setToken('');
   }
 

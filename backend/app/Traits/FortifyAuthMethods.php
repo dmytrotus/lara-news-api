@@ -15,11 +15,13 @@ trait FortifyAuthMethods
                     'email' => $request->email,
                     'password' => $request->password,
                 ]);
+        $tokenExpires = time() + config('jwt.ttl') * 60;
 
         return $request->wantsJson()
         ? response()->json([
             'message' => 'User is logged in',
             'token' => $jwtToken,
+            'token_expires' => $tokenExpires,
         ], 200)
         : redirect()->intended(Fortify::redirects('login'));
     }
