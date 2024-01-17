@@ -1,6 +1,6 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { register } from "../useApi";
+import { register } from "../api/useAuthApi";
 import { UserRegisterData } from "../lib/definitions";
 
 function Register() {

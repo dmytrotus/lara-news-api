@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { Link, Navigate } from "react-router-dom";
 import { UserLoginData } from "../lib/definitions";
-import { login } from "../useApi";
+import { login } from "../api/useAuthApi";
 
 function Login() {
 

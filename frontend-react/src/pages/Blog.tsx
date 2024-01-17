@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { getPosts } from '../useApi';
+import { getPosts } from '../api/useApi';
 import PostTile from '../UI/PostTile';
-import { getBearerToken, setBearerToken } from "../lib/globals";
+import { getBearerToken, setBearerToken } from "../lib/auth";
 import { Navigate } from "react-router-dom";
 
 function Blog() {

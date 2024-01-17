@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisteredMyUserController;
+use App\Http\Controllers\Auth\JwtController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
@@ -22,10 +23,12 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
+
+Route::middleware(['auth:api'])->group(function () {
     Route::get('posts', [PostController::class, 'index'])
             ->name('posts.index');
 });
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/register', [RegisteredUserController::class, 'store']);
+Route::post('/refresh-token', [JwtController::class, 'refreshToken']);
