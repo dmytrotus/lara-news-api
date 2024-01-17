@@ -27,8 +27,13 @@ php artisan app:sync-news
 ```
 Or if you set the cron job, news will be fetched automatically every day at 8 am
 
+## Auth is working through JWT token
+Sinse PHP package for jwt token was installed, we need to generate private key into .env file
+```js
+php artisan jwt:secret
+```
+
 ## What else need to do inside the project
 - blog pagination
-- improve auth via jwt token 
 - add user page with settings and news preferrences
 - add login/register error handlers
