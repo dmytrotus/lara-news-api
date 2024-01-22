@@ -27,7 +27,7 @@ class RefreshJwtToken
             $token = auth('api')->setToken($accessToken)->refresh();
 
             $response->withCookie(
-                Cookie::make('accessToken', $token, $minutes = config('jwt.ttl') * 2, $path = null, $domain = config('app.frontend_origin'), $secure = true, $httpOnly = true)
+                Cookie::make('accessToken', $token, $minutes = 60, $path = null, $domain = config('app.frontend_origin'), $secure = true, $httpOnly = true)
             );
 
             $response->withCookie(
