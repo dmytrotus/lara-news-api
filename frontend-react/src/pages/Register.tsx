@@ -1,13 +1,10 @@
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { register } from "../api/useAuthApi";
+import { register, getUser } from "../api/useAuthApi";
 import { UserRegisterData } from "../lib/definitions";
-import { useDispatch, useSelector } from 'react-redux'
-import { updateUser, selectUser } from '../store/reducers/userReducer';
 
 function Register() {
 
-  const user = useSelector(selectUser)
   const [userData, setUserData] = useState<UserRegisterData>({
     name: '',
     email: '',
@@ -15,11 +12,19 @@ function Register() {
     password_confirmation: ''
   })
 
-  const dispatch = useDispatch();
+  const [loggedUser, setLoggedUser] = useState(null);
 
-  if (user) {
-    return <Navigate to="/blog" />;
+  const fetchLoggedUser = (): void => {
+    if(!loggedUser) {
+      getUser().then((user) => {
+        setLoggedUser(user)
+      })
+    }
   }
+
+  useEffect(() => {
+    fetchLoggedUser();
+  }, [])
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.persist();
@@ -31,9 +36,13 @@ function Register() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const user = await register(userData);
-    dispatch(updateUser(user))
+    await register(userData);
+    fetchLoggedUser();
   };
+
+  if(loggedUser) {
+    return <Navigate to='/blog' />
+  }
 
   return (
     <div className="container px-8 mx-auto xl:px-5  max-w-screen-lg py-5 lg:py-8">

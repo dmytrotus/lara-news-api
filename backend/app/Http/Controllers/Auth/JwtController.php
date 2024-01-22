@@ -12,7 +12,8 @@ class JwtController extends Controller
 {
     public function logout(Request $request): JsonResponse
     {
-        // later
+        $accessToken = $request->cookie('accessToken');
+        auth('api')->setToken($accessToken)->invalidate();
 
         return $response;
     }

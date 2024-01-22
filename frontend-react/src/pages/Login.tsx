@@ -1,19 +1,28 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { Link, Navigate } from "react-router-dom";
 import { UserLoginData } from "../lib/definitions";
-import { login } from "../api/useAuthApi";
-import { useDispatch, useSelector } from 'react-redux'
-import { updateUser, selectUser } from '../store/reducers/userReducer';
+import { login, getUser } from "../api/useAuthApi";
 
 function Login() {
 
-  const user = useSelector(selectUser)
   const [userData, setUserData] = useState<UserLoginData>({
     email: '',
     password: '',
   })
 
-  const dispatch = useDispatch()
+  const [loggedUser, setLoggedUser] = useState(null);
+
+  const fetchLoggedUser = (): void => {
+    if(!loggedUser) {
+      getUser().then((user) => {
+        setLoggedUser(user)
+      })
+    }
+  }
+
+  useEffect(() => {
+    fetchLoggedUser();
+  }, [])
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.persist();
@@ -25,12 +34,12 @@ function Login() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const user = await login(userData);
-    dispatch(updateUser(user))
+    await login(userData);
+    fetchLoggedUser();
   };
 
-  if (user) {
-    return <Navigate to="/blog" />;
+  if(loggedUser) {
+    return <Navigate to='/blog' />
   }
 
     return (

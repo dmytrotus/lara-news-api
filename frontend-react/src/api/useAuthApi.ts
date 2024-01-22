@@ -14,6 +14,11 @@ export const register = async (userData: UserRegisterData) => {
     return res.data;
 }
 
+export const getUser = async () => {
+    const res = await axios.get(backendHost + 'api/user');
+    return res.data;
+}
+
 export const logout = async () => {
     const res = await axios.post(backendHost + 'api/logout');
     return res.data;

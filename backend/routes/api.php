@@ -19,14 +19,13 @@ use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 |
 */
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
 Route::middleware(['auth:api'])->group(function () {
     Route::get('posts', [PostController::class, 'index'])
             ->name('posts.index');
+
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 });
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
