@@ -15,6 +15,16 @@ class JwtController extends Controller
         $accessToken = $request->cookie('accessToken');
         auth('api')->setToken($accessToken)->invalidate();
 
+        $response = response()->json(['message' => 'ok'], 200);
+
+        $response->withCookie(
+            Cookie::forget('accessToken')
+        );
+
+        $response->withCookie(
+            Cookie::forget('accessTokenExpires')
+        );
+
         return $response;
     }
 }
