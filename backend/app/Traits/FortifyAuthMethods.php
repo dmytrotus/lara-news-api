@@ -6,6 +6,7 @@ use Laravel\Fortify\Fortify;
 use Illuminate\Http\Request;
 use App\Models\User;
 use JWTAuth;
+use Illuminate\Support\Facades\Cookie;
 
 trait FortifyAuthMethods
 {
@@ -16,13 +17,23 @@ trait FortifyAuthMethods
                     'password' => $request->password,
                 ]);
         $tokenExpires = time() + config('jwt.ttl') * 60;
+        $user = User::where('email', $request->email)->firstOrFail();
+
+        $response = response()->json([
+            'name' => $user->name,
+            'id' => $user->id,
+        ], 200);
+
+        $response->withCookie(
+            Cookie::make('accessToken', $jwtToken, $minutes = config('jwt.ttl') * 2, $path = null, $domain = config('app.frontend_origin'), $secure = true, $httpOnly = true)
+        );
+
+        $response->withCookie(
+            Cookie::make('accessTokenExpires', $tokenExpires, $minutes = config('jwt.ttl'), $path = null, $domain = config('app.frontend_origin'), $secure = true, $httpOnly = true)
+        );
 
         return $request->wantsJson()
-        ? response()->json([
-            'message' => 'User is logged in',
-            'token' => $jwtToken,
-            'token_expires' => $tokenExpires,
-        ], 200)
+        ? $response
         : redirect()->intended(Fortify::redirects('login'));
     }
 

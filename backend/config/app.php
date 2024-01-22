@@ -18,6 +18,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'frontend_origin' => env('FRONTEND_ORIGIN', 'localhost'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

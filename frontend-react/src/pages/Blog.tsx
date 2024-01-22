@@ -1,27 +1,16 @@
 import { useState, useEffect } from 'react';
 import { getPosts } from '../api/useApi';
 import PostTile from '../UI/PostTile';
-import { getBearerToken, setBearerToken } from "../lib/auth";
-import { Navigate } from "react-router-dom";
+import { logout } from "../api/useAuthApi";
 
 function Blog() {
   const[posts, setPosts] = useState([]);
-  const[token, setToken] = useState(getBearerToken());
 
   useEffect(() => {
     getPosts().then((res) => {
       setPosts(res.data)
     })
   }, [])
-
-  const logout = () => {
-    setBearerToken('', '');
-    setToken('');
-  }
-
-  if (!token) {
-    return <Navigate to="/" />;
-  }
   
   return (
     <div className="container px-8 mx-auto xl:px-5  max-w-screen-lg py-5 lg:py-8">

@@ -1,18 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const accessToken = createSlice({
-  name: 'access_token',
+export const user = createSlice({
+  name: 'user',
   initialState: {
     value: null
   },
   reducers: {
-    updateAccessToken: (state, action) => {
+    updateUser: (state, action) => {
       state.value = action.payload
     }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { updateAccessToken } = accessToken.actions
-
-export default accessToken.reducer
+export const { updateUser } = user.actions
+export const selectUser = (state) => state.user.value;
+export default user.reducer

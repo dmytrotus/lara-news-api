@@ -6,24 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\Cookie;
 
 class JwtController extends Controller
 {
-    public function refreshToken(Request $request): JsonResponse
+    public function logout(Request $request): JsonResponse
     {
-        try {
-            $token = auth('api')->refresh();
-        } catch (JWTException $e) {
-            return response()->json([
-                'message' => 'original token is not valid',
-                'token' => null,
-            ], 400);
-        }
+        // later
 
-        return response()->json([
-            'message' => 'token refreshed',
-            'token' => $token,
-            'token_expires' => $tokenExpires = time() + config('jwt.ttl') * 60,
-        ]);
+        return $response;
     }
 }

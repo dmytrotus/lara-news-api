@@ -31,4 +31,4 @@ Route::middleware(['auth:api'])->group(function () {
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/register', [RegisteredUserController::class, 'store']);
-Route::post('/refresh-token', [JwtController::class, 'refreshToken']);
+Route::post('/logout', [JwtController::class, 'logout']);

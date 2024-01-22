@@ -2,10 +2,12 @@ import { useState, FormEvent, ChangeEvent } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { register } from "../api/useAuthApi";
 import { UserRegisterData } from "../lib/definitions";
+import { useDispatch, useSelector } from 'react-redux'
+import { updateUser, selectUser } from '../store/reducers/userReducer';
 
 function Register() {
 
-  const [token, setToken] = useState(null);
+  const user = useSelector(selectUser)
   const [userData, setUserData] = useState<UserRegisterData>({
     name: '',
     email: '',
@@ -13,7 +15,9 @@ function Register() {
     password_confirmation: ''
   })
 
-  if (token) {
+  const dispatch = useDispatch();
+
+  if (user) {
     return <Navigate to="/blog" />;
   }
 
@@ -27,8 +31,8 @@ function Register() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const res = await register(userData);
-    setToken(res.data.token)
+    const user = await register(userData);
+    dispatch(updateUser(user))
   };
 
   return (

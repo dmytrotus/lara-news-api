@@ -2,14 +2,18 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import { Link, Navigate } from "react-router-dom";
 import { UserLoginData } from "../lib/definitions";
 import { login } from "../api/useAuthApi";
+import { useDispatch, useSelector } from 'react-redux'
+import { updateUser, selectUser } from '../store/reducers/userReducer';
 
 function Login() {
 
-  const [token, setToken] = useState(null);
+  const user = useSelector(selectUser)
   const [userData, setUserData] = useState<UserLoginData>({
     email: '',
     password: '',
   })
+
+  const dispatch = useDispatch()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.persist();
@@ -21,11 +25,11 @@ function Login() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const res = await login(userData);
-    setToken(res.data.token)
+    const user = await login(userData);
+    dispatch(updateUser(user))
   };
 
-  if (token) {
+  if (user) {
     return <Navigate to="/blog" />;
   }
 
