@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Services\QueueService;
+use App\Http\Controllers\RabbitMQController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return 'Backend is working';
 });
+
+Route::get('/send-message-via-queue', QueueService::class);
+
+Route::get('/rabbit-publish', [RabbitMQController::class, 'publishMessage']);
+Route::get('/rabbit-consume', [RabbitMQController::class, 'consumeMessage']);
