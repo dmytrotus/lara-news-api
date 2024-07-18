@@ -39,7 +39,7 @@ services:
 
     # mysql
     mysql:
-        image: mysql
+        image: mariadb:10.6.18-ubi9
         container_name: database
         ports:
             - "3346:3306"
