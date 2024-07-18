@@ -58,6 +58,18 @@ services:
         ports:
             - '${FORWARD_MAILPIT_PORT:-1026}:1025'
             - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8026}:8025'
+    
+    # redis 
+    redis:
+        image: 'redis:alpine'
+        ports:
+            - '${FORWARD_REDIS_PORT:-6379}:6379'
+        volumes:
+            - './docker/redis:/data'
+        healthcheck:
+            test: ['CMD', 'redis-cli', 'ping']
+            retries: 3
+            timeout: 5s
 
     # rabbitmq
     # rabbitmq:
