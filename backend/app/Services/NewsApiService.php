@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
-use App\Models\Post;
 use Carbon\Carbon;
+use App\Models\Post;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
 
 class NewsApiService
 {
@@ -39,21 +40,29 @@ class NewsApiService
             return;
         }
 
+        $articles = array_filter($articles, function (array $article) {
+            return $article['title'] !== null;
+        });
+
         if (count($articles) > 0) {
             foreach ($articles as $article) {
                 if ($this->hasCopyInDb($article)) {
                     continue;
                 }
-                Post::create([
-                    'main_source' => 'newsapi',
-                    'source' => $article['source']['name'],
-                    'author' => $article['author'],
-                    'title' => $article['title'],
-                    'description' => $article['description'],
-                    'url' => $article['url'],
-                    'url_to_image' => $article['urlToImage'],
-                    'content' => $article['content']
-                ]);
+                try {
+                    Post::create([
+                        'main_source' => 'newsapi',
+                        'source' => $article['source']['name'],
+                        'author' => $article['author'],
+                        'title' => $article['title'],
+                        'description' => $article['description'],
+                        'url' => $article['url'],
+                        'url_to_image' => $article['urlToImage'],
+                        'content' => $article['content']
+                    ]);
+                } catch (\Exception $e) {
+                    Log::error($e->getMessage());
+                }
             }
         }
     }
